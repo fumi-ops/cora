@@ -1,0 +1,91 @@
+@import "tailwindcss";
+@import "basecoat-css";
+@plugin "@tailwindcss/forms";
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --font-body: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* Neutrals */
+  --cora-bg: #f8fafc;
+  --cora-panel: rgba(255, 255, 255, 0.84);
+  --cora-border: rgba(0, 0, 0, 0.08);
+  --cora-text: #0f172a;
+  --cora-text-muted: #64748b;
+  --cora-accent: #0284c7;
+  --cora-accent-muted: rgb(59 135 168 / 15%);
+
+  /* Background Grid */
+  --grid-color: rgba(0, 0, 0, 0.03);
+  --radial-gradient: radial-gradient(circle at 50% 0%, rgba(2, 132, 199, 0.12), transparent 45%);
+}
+
+.dark {
+  --cora-bg: #080808;
+  --cora-panel: rgba(13, 13, 13, 0.88);
+  --cora-border: rgba(255, 255, 255, 0.08);
+  --cora-text: #f4f4f5;
+  --cora-text-muted: #71717a;
+  --cora-accent: #38bdf8;
+  --cora-accent-muted: rgb(59 135 168 / 15%);
+
+  /* Background Grid */
+  --grid-color: rgba(255, 255, 255, 0.035);
+  --radial-gradient: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.08), transparent 40%);
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+html {
+  background: var(--cora-bg);
+  color: var(--cora-text);
+  transition: background 300ms ease;
+}
+
+body {
+  position: relative;
+  overflow-x: hidden;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background-image:
+    var(--radial-gradient),
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 100% 100%, 72px 72px, 72px 72px;
+  mask-image: radial-gradient(circle at 50% 25%, black 40%, transparent 95%);
+  z-index: -1;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  text-wrap: balance;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+::selection {
+  background: var(--cora-accent-muted);
+  color: var(--cora-text);
+}

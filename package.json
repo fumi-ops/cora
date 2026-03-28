@@ -1,14 +1,72 @@
 {
-  "name": "cora",
-  "type": "module",
-  "private": true,
-  "devDependencies": {
-    "@types/bun": "latest"
+  "name": "@fumi-ops/cora",
+  "version": "1.0.0",
+  "description": "AI Agent-Ready Local-First Dashboards",
+  "author": "Varun A P",
+  "homepage": "https://cora.fumi.dev",
+  "repository": "https://github.com/fumi-ops/cora",
+  "license": "MIT",
+  "packageManager": "bun@1.3.11",
+  "engines": {
+    "bun": ">=1.3.0",
+    "node": ">=22.13.0"
   },
-  "peerDependencies": {
-    "typescript": "^5"
+  "keywords": [
+    "dashboard",
+    "analytics",
+    "local-first",
+    "cli",
+    "agent"
+  ],
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "bin": {
+    "cora": "dist/cora.js"
   },
   "workspaces": [
-    "packages/*"
-  ]
+    "ui"
+  ],
+  "scripts": {
+    "dev": "bun run src/cli.ts",
+    "dev:ui": "bun run --filter cora-ui dev",
+    "serve": "bun run src/cli.ts serve",
+    "build:ui": "bun run --filter cora-ui build && bun run src/scripts/embed-ui-assets.ts",
+    "embed:ui": "bun run src/scripts/embed-ui-assets.ts",
+    "check:embedded-ui": "bun run --filter cora-ui build && bun run src/scripts/embed-ui-assets.ts --check",
+    "build:cli": "rm -rf dist && mkdir -p dist && bun build src/cli.ts --target=node --minify --outfile dist/cora.mjs && bun run src/scripts/build-cli-bin.ts",
+    "build": "bun run build:ui && bun run build:cli",
+    "typecheck:cli": "tsc --noEmit -p tsconfig.json",
+    "typecheck:ui": "bun run --filter cora-ui typecheck",
+    "typecheck": "bun run typecheck:cli && bun run typecheck:ui",
+    "lint:cli": "tsc --noEmit -p tsconfig.json",
+    "lint:ui": "bun run --filter cora-ui lint",
+    "lint": "bun run lint:cli && bun run lint:ui",
+    "test:smoke": "bun test tests/smoke.test.ts",
+    "test": "bun test tests/*",
+    "ci": "bun run typecheck && bun run lint && bun run test && bun run check:embedded-ui",
+    "prepack": "bun run build",
+    "validate": "bun run src/cli.ts validate",
+    "fetch": "bun run src/cli.ts fetch",
+    "export": "bun run src/cli.ts export"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "duckdb": "^1.4.4",
+    "mysql2": "^3.20.0",
+    "pg": "^8.20.0",
+    "yaml": "^2.8.3",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^25.5.0",
+    "@types/pg": "^8.20.0",
+    "typescript": "^6.0.2"
+  }
 }
