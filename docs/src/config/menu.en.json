@@ -1,0 +1,104 @@
+{
+  "main": [
+    {
+      "name": "Home",
+      "url": "/"
+    },
+    {
+      "name": "Getting Started",
+      "url": "",
+      "hasChildren": true,
+      "children": [
+        {
+          "name": "Overview",
+          "url": "/getting-started/introduction/overview/"
+        },
+        {
+          "name": "Quickstart",
+          "url": "/getting-started/introduction/quickstart/"
+        },
+        {
+          "name": "Workspace files",
+          "url": "/getting-started/global-settings/configuration/"
+        }
+      ]
+    },
+    {
+      "name": "Reference",
+      "url": "",
+      "hasChildren": true,
+      "children": [
+        {
+          "name": "Configuration format",
+          "url": "/reference/configuration/"
+        },
+        {
+          "name": "Connectors",
+          "url": "/reference/connectors/"
+        }
+      ]
+    },
+    {
+      "name": "GitHub",
+      "target": "_blank",
+      "url": "https://github.com/fumi-ops/cora"
+    },
+    {
+      "name": "Demo",
+      "url": "/demo/"
+    }
+  ],
+  "footer": {
+    "community": {
+      "title": "Project",
+      "links": [
+        {
+          "name": "GitHub",
+          "url": "https://github.com/fumi-ops/cora"
+        },
+        {
+          "name": "Changelog",
+          "url": "https://github.com/fumi-ops/cora/blob/main/CHANGELOG.md"
+        },
+        {
+          "name": "npm package",
+          "url": "https://www.npmjs.com/package/@fumi-ops/cora"
+        }
+      ]
+    },
+    "help_links": {
+      "title": "Docs",
+      "links": [
+        {
+          "name": "Quickstart",
+          "url": "/getting-started/introduction/quickstart/"
+        },
+        {
+          "name": "Workspace files",
+          "url": "/getting-started/global-settings/configuration/"
+        },
+        {
+          "name": "Connectors",
+          "url": "/reference/connectors/"
+        }
+      ]
+    },
+    "company": {
+      "title": "Security",
+      "links": [
+        {
+          "name": "Security policy",
+          "url": "https://github.com/fumi-ops/cora/blob/main/SECURITY.md"
+        },
+        {
+          "name": "Contributing",
+          "url": "https://github.com/fumi-ops/cora/blob/main/CONTRIBUTING.md"
+        },
+        {
+          "name": "License",
+          "url": "https://github.com/fumi-ops/cora/blob/main/LICENSE"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,37 @@
+---
+title: Connectors
+description: Built-in source types and how Cora loads community connectors.
+---
+
+## Built-in connectors
+
+Cora includes first-party connectors for:
+
+- Postgres
+- MySQL
+- SQLite
+- DuckDB
+- HTTP
+- Stripe
+- Plausible
+- GitHub
+
+## Named queries
+
+Some connectors expose named queries to keep configuration concise.
+
+- Stripe: `mrr`, `arr`, `new_customers_today`, `revenue_mtd`, `churn_rate`, `active_subscriptions`
+- Plausible: `visitors_today`, `visitors_mtd`, `top_pages`, `bounce_rate`
+- GitHub: `stars`, `open_issues`, `open_prs`, `commits_today`
+
+## Community connectors
+
+Cora loads community packages from local `node_modules` entries that start with `cora-connector-*`, including scoped packages such as `@acme/cora-connector-foo`.
+
+If a source uses `type: foo`, install a connector that exports `foo` and Cora will resolve it at runtime.
+
+## Related docs
+
+- [Quickstart](/getting-started/introduction/quickstart/)
+- [Workspace files](/getting-started/global-settings/configuration/)
+- [Configuration format](/reference/configuration/)

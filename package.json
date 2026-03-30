@@ -30,13 +30,16 @@
     "cora": "dist/cora.js"
   },
   "workspaces": [
-    "ui"
+    "ui",
+    "docs"
   ],
   "scripts": {
     "dev": "bun run src/cli.ts",
     "dev:ui": "bun run --filter cora-ui dev",
+    "dev:docs": "bun run --filter cora-docs dev",
     "serve": "bun run src/cli.ts serve",
     "build:ui": "bun run --filter cora-ui build && bun run src/scripts/embed-ui-assets.ts",
+    "build:docs": "bun run --filter cora-docs build",
     "embed:ui": "bun run src/scripts/embed-ui-assets.ts",
     "check:embedded-ui": "bun run --filter cora-ui build && bun run src/scripts/embed-ui-assets.ts --check",
     "build:cli": "rm -rf dist && mkdir -p dist && bun build src/cli.ts --target=node --minify --outfile dist/cora.mjs && bun run src/scripts/build-cli-bin.ts",

@@ -1,0 +1,139 @@
+{
+  "dashboard": {
+    "title": "[Demo] SAAS Control Room",
+    "updated": "2026-03-30T00:00:00.000Z",
+    "theme": "dark",
+    "layout": "auto",
+    "widgets": [
+      {
+        "id": "mrr",
+        "type": "metric",
+        "label": "MRR",
+        "value": 148250,
+        "unit": "$",
+        "trend": "+12.4%",
+        "trendLabel": "vs last month",
+        "status": "good"
+      },
+      {
+        "id": "arr",
+        "type": "metric",
+        "label": "ARR",
+        "value": 1779000,
+        "unit": "$",
+        "trend": "+11.8%",
+        "trendLabel": "annualized",
+        "status": "good"
+      },
+      {
+        "id": "active_subscriptions",
+        "type": "metric",
+        "label": "Active Subscriptions",
+        "value": 428,
+        "trend": "+18",
+        "trendLabel": "net adds this month",
+        "status": "good"
+      },
+      {
+        "id": "visitors_mtd",
+        "type": "metric",
+        "label": "Visitors (MTD)",
+        "value": 48210,
+        "trend": "+6.1%",
+        "trendLabel": "vs previous month",
+        "status": "neutral"
+      },
+      {
+        "id": "open_prs",
+        "type": "metric",
+        "label": "Open PRs",
+        "value": 12,
+        "trend": "-3",
+        "trendLabel": "this week",
+        "status": "warning"
+      },
+      {
+        "id": "revenue_trend",
+        "type": "timeseries",
+        "label": "Revenue Trend",
+        "chartType": "area",
+        "color": "emerald",
+        "data": [
+          { "date": "2026-03-21", "value": 96 },
+          { "date": "2026-03-22", "value": 104 },
+          { "date": "2026-03-23", "value": 111 },
+          { "date": "2026-03-24", "value": 117 },
+          { "date": "2026-03-25", "value": 121 },
+          { "date": "2026-03-26", "value": 129 },
+          { "date": "2026-03-27", "value": 136 }
+        ]
+      },
+      {
+        "id": "top_pages",
+        "type": "bar",
+        "label": "Top Pages",
+        "color": "blue",
+        "data": [
+          { "label": "Homepage", "value": 64 },
+          { "label": "Docs", "value": 52 },
+          { "label": "Pricing", "value": 31 },
+          { "label": "Blog", "value": 18 }
+        ]
+      },
+      {
+        "id": "open_deals",
+        "type": "table",
+        "label": "Open Deals",
+        "columns": ["Account", "Value", "Stage", "Owner"],
+        "rows": [
+          ["Acme Corp", "$24,000", "Proposal", "Sam"],
+          ["Northstar", "$18,500", "Discovery", "Mina"],
+          ["Vector Labs", "$9,000", "Negotiation", "Leo"]
+        ]
+      },
+      {
+        "id": "founder_notes",
+        "type": "text",
+        "label": "Founder Notes",
+        "content": "### This week\n- Reduce signup friction in the first-run flow.\n- Watch churn risk in the self-serve cohort.\n- Review the pricing page hierarchy."
+      }
+    ]
+  },
+  "widgetErrors": {},
+  "sourceStatuses": {
+    "stripe_main": {
+      "id": "stripe_main",
+      "type": "stripe",
+      "refresh": "every 1h",
+      "lastFetched": "2026-03-30T00:00:00.000Z",
+      "cacheStatus": "fresh"
+    },
+    "plausible_main": {
+      "id": "plausible_main",
+      "type": "plausible",
+      "refresh": "every 30m",
+      "lastFetched": "2026-03-30T00:00:00.000Z",
+      "cacheStatus": "stale"
+    },
+    "github_repo": {
+      "id": "github_repo",
+      "type": "github",
+      "refresh": "every 30m",
+      "lastFetched": "2026-03-30T00:00:00.000Z",
+      "cacheStatus": "stale"
+    }
+  },
+  "sourceByWidget": {
+    "mrr": "stripe_main",
+    "arr": "stripe_main",
+    "active_subscriptions": "stripe_main",
+    "revenue_trend": "stripe_main",
+    "visitors_mtd": "plausible_main",
+    "top_pages": "plausible_main",
+    "open_prs": "github_repo",
+    "open_deals": "github_repo",
+    "founder_notes": "github_repo"
+  },
+  "isFetching": false,
+  "version": "demo"
+}

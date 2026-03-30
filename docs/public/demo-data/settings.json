@@ -1,0 +1,10 @@
+{
+  "version": "demo",
+  "fields": [
+    { "sourceId": "stripe_main", "key": "STRIPE_KEY", "exists": true },
+    { "sourceId": "plausible_main", "key": "PLAUSIBLE_API_KEY", "exists": false },
+    { "sourceId": "plausible_main", "key": "PLAUSIBLE_SITE_ID", "exists": false },
+    { "sourceId": "github_repo", "key": "GITHUB_TOKEN", "exists": true },
+    { "sourceId": "github_repo", "key": "GITHUB_REPO", "exists": false }
+  ]
+}

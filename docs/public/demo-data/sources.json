@@ -1,0 +1,23 @@
+[
+  {
+    "id": "stripe_main",
+    "type": "stripe",
+    "refresh": "every 1h",
+    "lastFetched": "2026-03-30T00:00:00.000Z",
+    "cacheStatus": "fresh"
+  },
+  {
+    "id": "plausible_main",
+    "type": "plausible",
+    "refresh": "every 30m",
+    "lastFetched": "2026-03-30T00:00:00.000Z",
+    "cacheStatus": "stale"
+  },
+  {
+    "id": "github_repo",
+    "type": "github",
+    "refresh": "every 30m",
+    "lastFetched": "2026-03-30T00:00:00.000Z",
+    "cacheStatus": "stale"
+  }
+]

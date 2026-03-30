@@ -1,0 +1,369 @@
+---
+const { data } = Astro.locals.starlightRoute.entry;
+const { title = data.title, tagline } = data.hero || {};
+const { sidebar } = Astro.locals.starlightRoute;
+
+function getFirstHref(item: any): string | null {
+  if (typeof item?.href === "string" && item.href) {
+    return item.href;
+  }
+  if (item?.entries && Array.isArray(item.entries) && item.entries.length > 0) {
+    return getFirstHref(item.entries[0]);
+  }
+  return null; // No valid href found
+}
+
+// check if 404 page
+const is404 = Astro.locals.starlightRoute?.id === "404";
+---
+
+<div
+  class="hero flex flex-col items-center mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-35 relative"
+>
+  <!-- Floating Dashboard Cards -->
+  <div class="floating-cards">
+    <div class="card card-1" data-speed="0.05">
+      <div class="card-header">
+        <div class="card-dots">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="card-label">Revenue</div>
+        <div class="card-value">$48,200</div>
+        <div class="card-trend">+14%</div>
+      </div>
+    </div>
+
+    <div class="card card-2" data-speed="0.08">
+      <div class="card-header">
+        <div class="card-dots">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="card-label">Active Users</div>
+        <div class="card-value">2,847</div>
+        <div class="card-trend">+23%</div>
+      </div>
+    </div>
+
+    <div class="card card-3" data-speed="0.06">
+      <div class="card-header">
+        <div class="card-dots">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="card-label">Conversion</div>
+        <div class="card-value">4.2%</div>
+        <div class="card-trend">+8%</div>
+      </div>
+    </div>
+  </div>
+
+  {title && <h1 set:html={title} class="mb-8 text-center rounded-2xl" />}
+  {tagline && (
+    <div class="tagline-container">
+      <span class="terminal-prompt">$</span>
+      <p set:html={tagline} class="text-xl text-center typewriter" />
+      <span class="cursor"></span>
+    </div>
+  )}
+
+  {
+    !is404 && (
+      <div class="mt-12">
+        <a
+          href="/getting-started/introduction/quickstart/"
+          class="btn btn-primary px-10 text-lg!"
+        >
+          {Astro.locals.t("hero.cta", "Getting Started")}
+        </a>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  @layer starlight.core {
+    .hero {
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 4.5rem !important;
+      line-height: 1.1 !important;
+      letter-spacing: -0.05em;
+      font-weight: 800;
+      color: var(--sl-color-white);
+    }
+
+    /* Tagline Terminal Style */
+    .tagline-container {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 1rem 1.5rem;
+      position: relative;
+    }
+
+    .terminal-prompt {
+      color: #10b981;
+      font-family: var(--sl-font-body);
+      font-weight: 600;
+      font-size: 1.25rem;
+    }
+
+    .typewriter {
+      color: var(--sl-color-white);
+      overflow: hidden;
+      white-space: nowrap;
+      border: none;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.25rem;
+      background: #10b981;
+      margin-left: 2px;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    /* Floating Cards */
+    .floating-cards {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    .card {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      padding: 1rem;
+      min-width: 180px;
+      opacity: 0;
+      animation: floatIn 0.8s ease-out forwards;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-1 {
+      top: 10%;
+      left: 0%;
+      animation-delay: 0.2s;
+      animation: floatIn 0.8s ease-out 0.2s forwards, float1 6s ease-in-out infinite 0.2s;
+    }
+
+    .card-2 {
+      top: 20%;
+      right: 5%;
+      animation-delay: 0.4s;
+      animation: floatIn 0.8s ease-out 0.4s forwards, float2 7s ease-in-out infinite 0.4s;
+    }
+
+    .card-3 {
+      bottom: 16%;
+      left: 12%;
+      animation-delay: 0.6s;
+      animation: floatIn 0.8s ease-out 0.6s forwards, float3 8s ease-in-out infinite 0.6s;
+    }
+
+    @keyframes floatIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 0.5;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float1 {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-15px) rotate(-1deg);
+      }
+    }
+
+    @keyframes float2 {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-20px) rotate(4deg);
+      }
+    }
+
+    @keyframes float3 {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-12px) rotate(0.5deg);
+      }
+    }
+
+    .card-header {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-dots span {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .card-dots span:first-child {
+      background: #ef4444;
+    }
+
+    .card-dots span:nth-child(2) {
+      background: #f59e0b;
+    }
+
+    .card-dots span:last-child {
+      background: #10b981;
+    }
+
+    .card-label {
+      font-size: 0.75rem;
+      color: var(--sl-color-gray-4);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+      font-family: var(--sl-font-body);
+    }
+
+    .card-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--sl-color-white);
+      font-family: var(--sl-font-heading);
+      margin-bottom: 0.25rem;
+    }
+
+    .card-trend {
+      font-size: 0.875rem;
+      color: #10b981;
+      font-weight: 600;
+      font-family: var(--sl-font-body);
+    }
+
+    @media (max-width: 768px) {
+      .floating-cards {
+        display: none;
+      }
+
+      h1 {
+        font-size: 3rem !important;
+        line-height: 1.2 !important;
+        letter-spacing: -0.02em;
+      }
+
+      .tagline-container {
+        padding: 0.75rem 1rem;
+      }
+
+      .terminal-prompt {
+        font-size: 1rem;
+      }
+
+      .typewriter {
+        font-size: 1rem !important;
+      }
+    }
+  }
+</style>
+<script>
+  // Typewriter effect
+  const typewriterElement = document.querySelector('.typewriter');
+  if (typewriterElement) {
+    const text = typewriterElement.textContent || '';
+    typewriterElement.textContent = '';
+    let index = 0;
+
+    function typeWriter() {
+      if (index < text.length) {
+        typewriterElement.textContent += text.charAt(index);
+        index++;
+        setTimeout(typeWriter, 50);
+      }
+    }
+
+    // Start typing after a short delay
+    setTimeout(typeWriter, 500);
+  }
+
+  // Parallax effect for floating cards
+  const cards = document.querySelectorAll('.card');
+  const hero = document.querySelector('.hero');
+
+  if (hero && cards.length > 0) {
+    hero.addEventListener('mousemove', (e) => {
+      const rect = hero.getBoundingClientRect();
+      const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
+      const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
+
+      cards.forEach((card) => {
+        const speed = parseFloat(card.getAttribute('data-speed') || '0.05');
+        const xOffset = x * speed * 100;
+        const yOffset = y * speed * 100;
+        card.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+      });
+    });
+
+    // Reset card position when mouse leaves
+    hero.addEventListener('mouseleave', () => {
+      cards.forEach((card) => {
+        card.style.transform = '';
+      });
+    });
+  }
+
+  // Existing code
+  const iconElements = document.querySelector("[data-icon-path]");
+  const heroSection = document.querySelector(".hero");
+  const header = document.querySelector(".header");
+  const heroBG = document.querySelector(".hero-bg") as HTMLElement;
+
+  const totalHeight =
+    (heroSection?.clientHeight || 0) + (header?.clientHeight || 0) + 24;
+
+  if (heroBG) {
+    heroBG.style.height = `${totalHeight}px`;
+  }
+
+  // make image element and add the path to src
+  if (iconElements) {
+    const iconPath = iconElements.getAttribute("data-icon-path");
+
+    const img = document.createElement("img");
+    img.src = `/${iconPath}` || "";
+    img.alt = "icon";
+    img.className =
+      "hidden lg:inline-block size-20 -mb-2 rounded-2xl animate-[bounce_2s_ease-in-out_infinite]";
+    iconElements.replaceWith(img);
+  }
+</script>

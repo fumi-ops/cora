@@ -1,0 +1,51 @@
+---
+title: Configuration format
+description: Reference for `cora.config.yaml` and the dashboard data model.
+---
+
+## `cora.config.yaml`
+
+The config file ties a source to a widget and defines how refreshes happen.
+
+```yaml
+sources:
+  - id: stripe_main
+    type: stripe
+    refreshInterval: 300
+
+widgets:
+  - id: mrr
+    source: stripe_main
+    query: mrr
+```
+
+## Source fields
+
+| Field | Meaning |
+| --- | --- |
+| `id` | Unique source identifier used by widgets and refreshes |
+| `type` | Connector type, such as `stripe`, `postgres`, or `github` |
+| `refreshInterval` | Optional refresh interval in seconds |
+| `query` | Named query or endpoint the connector should execute |
+
+## Dashboard file
+
+`dashboard.json` stores the values rendered by the UI. A widget update can set multiple properties at once:
+
+```json
+{
+  "id": "mrr",
+  "value": 4800,
+  "trend": "+14%"
+}
+```
+
+## Agent safety
+
+The local widget endpoint lets an agent patch one widget at a time instead of touching the whole dashboard file. That keeps updates narrow and makes the resulting state easy to review.
+
+## Related docs
+
+- [Quickstart](/getting-started/introduction/quickstart/)
+- [Workspace files](/getting-started/global-settings/configuration/)
+- [Connectors](/reference/connectors/)

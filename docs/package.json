@@ -1,0 +1,35 @@
+{
+  "name": "cora-docs",
+  "version": "1.0.0",
+  "description": "Cora documentation site built with Astro and Tailwind CSS",
+  "author": "Varun A P",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "deploy:cf-workers": "npm run build && wrangler deploy",
+    "preview:cf-workers": "npm run build && wrangler dev"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.38.2",
+    "@astrojs/starlight-tailwind": "5.0.0",
+    "@fontsource/inter": "^5.2.8",
+    "@fontsource/space-grotesk": "^5.2.10",
+    "@tailwindcss/vite": "^4.1.17",
+    "astro": "^6.1.1",
+    "marked": "^17.0.1",
+    "sharp": "^0.34.5",
+    "vite": "^7.2.6"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.8",
+    "astro-vtbot": "^2.1.9",
+    "tailwindcss": "^4.1.17",
+    "typescript": "^6.0.2",
+    "wrangler": "^4"
+  }
+}

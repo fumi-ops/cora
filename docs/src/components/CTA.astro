@@ -1,0 +1,97 @@
+---
+import { getEntry } from "astro:content";
+import Button from "./user-components/Button.astro";
+import Section from "./Section.astro";
+
+const locale = Astro.currentLocale || "en";
+
+const cta = await getEntry(
+  "ctaSection",
+  `${locale === "en" ? "" : `${locale}/`}call-to-action`
+);
+const { title, description, enable, fill_button, outline_button } =
+  cta?.data ?? {};
+---
+
+<div class={enable ? "cta-section-wrapper" : "hidden"}>
+  <div class="cta-container">
+    <Section title={title} description={description}>
+      <div class="cta-actions">
+        {fill_button?.enable && (
+          <Button
+            label={fill_button.label || "Get Started"}
+            link={fill_button.link || "/getting-started/introduction/quickstart/"}
+            variant="primary"
+          />
+        )}
+        {outline_button?.enable && (
+          <Button
+            label={outline_button.label || "View Docs"}
+            link={
+              outline_button.link || "/getting-started/introduction/overview/"
+            }
+            variant="outline-primary"
+          />
+        )}
+      </div>
+    </Section>
+  </div>
+</div>
+
+<style>
+  .cta-section-wrapper {
+    padding: 4rem 0;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* Light mode styling */
+  :global([data-theme="light"]) .cta-section-wrapper {
+    background: #ffffff;
+  }
+
+  /* Dark mode styling */
+  :global([data-theme="dark"]) .cta-section-wrapper {
+    background: #000000;
+  }
+
+  .cta-container {
+    position: relative;
+    overflow: hidden;
+    padding: 2rem;
+    transition: all 0.3s ease;
+  }
+
+  /* Adjust internal Section padding since it's now in a box */
+  .cta-container :global(.section) {
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+  }
+
+  .cta-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    margin-top: -1rem; /* Better alignment with Section description */
+  }
+
+  @media (max-width: 640px) {
+    .cta-section-wrapper {
+      padding: 2rem 1rem;
+    }
+    .cta-container {
+      border-radius: 1.5rem;
+      padding: 1rem;
+    }
+    .cta-actions {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .cta-actions :global(a) {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
+

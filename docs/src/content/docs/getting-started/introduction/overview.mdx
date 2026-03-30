@@ -1,0 +1,52 @@
+---
+title: Overview
+description: Understand what Cora does, how it works, and where it fits in a local-first workflow.
+---
+
+## What Cora is
+
+Cora is a file-driven dashboard runtime for local-first teams and agents. It turns a workspace into a live dashboard without pushing secrets or data into a hosted backend.
+
+The core idea is simple:
+
+1. `dashboard.json` stores the dashboard state.
+2. `cora.config.yaml` defines sources and refresh behavior.
+3. The CLI fetches data and the server renders it locally.
+
+## Why it exists
+
+- One local server, so the app stays private.
+- One config file, so source bindings stay versioned.
+- One widget update endpoint, so agents can write safely.
+
+## Built-in data sources
+
+Cora ships with connectors for:
+
+- Postgres
+- MySQL
+- SQLite
+- DuckDB
+- HTTP
+- Stripe
+- Plausible
+- GitHub
+
+Community connectors are discovered at runtime from packages named `cora-connector-*`.
+
+## Agent workflow
+
+Agents do not need direct file access to update a widget.
+
+```http
+POST http://127.0.0.1:4242/api/widget
+Content-Type: application/json
+
+{ "id": "mrr", "value": 4800, "trend": "+14%" }
+```
+
+## Read next
+
+- [Quickstart](/getting-started/introduction/quickstart/)
+- [Workspace files](/getting-started/global-settings/configuration/)
+- [Connectors](/reference/connectors/)

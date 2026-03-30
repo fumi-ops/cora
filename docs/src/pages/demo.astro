@@ -1,0 +1,172 @@
+---
+// Demo page that loads the actual Cora UI with static mock data
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo - Cora Dashboard</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg%20width%3D%22498%22%20height%3D%22498%22%20viewBox%3D%220%200%20498%20498%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M396.19%200H101.259C45.3353%200%200%2045.3461%200%20101.283V396.284C0%20452.221%2045.3353%20497.567%20101.259%20497.567H396.19C452.114%20497.567%20497.449%20452.221%20497.449%20396.284V101.283C497.449%2045.3461%20452.114%200%20396.19%200Z%22%20fill%3D%22%238B5DFF%22%2F%3E%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M313.585%20295.386C313.585%20317.416%20267.025%20342.056%20204.692%20342.056C142.355%20342.056%2095.7916%20317.416%2095.7916%20295.386V252.062C121.055%20269.237%20159.761%20279.829%20204.692%20279.829C249.623%20279.829%20288.322%20269.237%20313.585%20252.062V295.386ZM422.486%20217.603H391.372C363.869%20217.603%20344.702%20209.405%20344.702%20202.047C344.702%20157.695%20284.516%20124.264%20204.691%20124.264C124.87%20124.264%2064.6807%20157.693%2064.6807%20202.047V295.384C64.6807%20339.736%20124.87%20373.167%20204.691%20373.167C264.582%20373.167%20313.414%20354.346%20334.075%20326.202C346.737%20336.05%20364.331%20342.054%20384.042%20342.054H422.483C431.086%20342.054%20438.039%20335.086%20438.039%20326.498V233.16C438.039%20224.574%20431.086%20217.603%20422.483%20217.603H422.486Z%22%20fill%3D%22white%22%2F%3E%3C%2Fsvg%3E"
+    />
+    <link rel="stylesheet" href="/demo-ui/assets/index-pmhu3iuV.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script is:inline>
+      // Mock data cache
+      let mockState = null;
+
+      // Override fetch to return static JSON files
+      const originalFetch = window.fetch;
+      window.fetch = async function(url, options) {
+        const urlStr = url.toString();
+
+        // Map API endpoints to static JSON files
+        if (urlStr.includes('/api/state')) {
+          const response = await originalFetch('/demo-data/state.json');
+          const data = await response.json();
+          mockState = data;
+          return new Response(JSON.stringify(data), {
+            headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }
+          });
+        }
+
+        if (urlStr.includes('/api/sources')) {
+          const response = await originalFetch('/demo-data/sources.json');
+          const data = await response.json();
+          return new Response(JSON.stringify(data), {
+            headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }
+          });
+        }
+
+        if (urlStr.includes('/api/settings')) {
+          const response = await originalFetch('/demo-data/settings.json');
+          const data = await response.json();
+          return new Response(JSON.stringify(data), {
+            headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }
+          });
+        }
+
+        if (urlStr.includes('/api/config/get')) {
+          const urlObj = new URL(urlStr);
+          const key = urlObj.searchParams.get('key') || '';
+          return new Response(JSON.stringify({ key, exists: false }), {
+            headers: { 'Content-Type': 'application/json' }
+          });
+        }
+
+        if (urlStr.includes('/api/config/set')) {
+          return new Response(JSON.stringify({ ok: true }), {
+            headers: { 'Content-Type': 'application/json' }
+          });
+        }
+
+        if (urlStr.includes('/api/widget')) {
+          return new Response(JSON.stringify({ ok: true }), {
+            headers: { 'Content-Type': 'application/json' }
+          });
+        }
+
+        if (urlStr.includes('/refresh')) {
+          return new Response(JSON.stringify({ ok: true }), {
+            headers: { 'Content-Type': 'application/json' }
+          });
+        }
+
+        // Default to original fetch for other requests
+        return originalFetch(url, options);
+      };
+
+      // Mock EventSource for SSE
+      window.EventSource = class MockEventSource {
+        constructor(url) {
+          this.url = url;
+          this.readyState = 0;
+          this.onopen = null;
+          this.onmessage = null;
+          this.onerror = null;
+
+          // Load initial state and start emitting events
+          this.init();
+        }
+
+        async init() {
+          try {
+            const response = await fetch('/demo-data/state.json');
+            const state = await response.json();
+            mockState = state;
+
+            // Simulate connection opening
+            this.readyState = 1;
+            if (this.onopen) {
+              this.onopen({ type: 'open' });
+            }
+
+            // Send initial state
+            if (this.onmessage) {
+              this.onmessage({
+                type: 'message',
+                data: JSON.stringify(state),
+                origin: 'http://localhost'
+              });
+            }
+
+            // Simulate periodic updates (every 30 seconds)
+            this.updateInterval = setInterval(() => {
+              if (this.onmessage && mockState) {
+                // Mutate some values to simulate live data
+                mockState.dashboard.widgets.forEach(widget => {
+                  if (widget.type === 'metric' && typeof widget.value === 'number') {
+                    const delta = Math.floor(Math.random() * 20) - 9;
+                    widget.value = Math.max(0, widget.value + delta);
+                  }
+                });
+                mockState.dashboard.updated = new Date().toISOString();
+
+                this.onmessage({
+                  type: 'message',
+                  data: JSON.stringify(mockState),
+                  origin: 'http://localhost'
+                });
+              }
+            }, 30000);
+
+          } catch (error) {
+            console.error('Failed to initialize mock EventSource:', error);
+            if (this.onerror) {
+              this.onerror({ type: 'error' });
+            }
+          }
+        }
+
+        close() {
+          if (this.updateInterval) {
+            clearInterval(this.updateInterval);
+          }
+          this.readyState = 2;
+        }
+
+        addEventListener(_type, listener) {
+          setTimeout(() => {
+            if (mockState) {
+              listener({
+                type: 'message',
+                data: JSON.stringify(mockState)
+              });
+            }
+          }, 100);
+        }
+
+        removeEventListener() {
+          // No-op for mock
+        }
+      };
+    </script>
+    <script type="module" src="/demo-ui/assets/index-C2b_4gOm.js"></script>
+  </body>
+</html>

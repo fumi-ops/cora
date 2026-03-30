@@ -1,0 +1,43 @@
+---
+title: Cora
+description: AI agent-ready local-first dashboards.
+template: splash
+hero:
+  title: Cora
+  tagline: AI agent-ready local-first dashboards.
+---
+
+Cora turns a dashboard workspace into a live local app. It reads `dashboard.json`, binds data from `cora.config.yaml`, and keeps the entire flow close to the source.
+
+## What ships
+
+- a CLI for `init`, `serve`, `fetch`, `validate`, `export`, `sources list`, and `config`
+- built-in connectors for the common tools that feed dashboards
+- an agent-safe widget endpoint for narrow updates
+- encrypted local credential storage
+
+## Quick start
+
+```bash
+bun install
+bun run src/cli.ts init --template saas
+bun run src/cli.ts serve
+```
+
+Open `http://127.0.0.1:4242` after the server starts.
+
+## Workspace contract
+
+- `dashboard.json` is rendered live
+- `cora.config.yaml` defines source bindings and refresh behavior
+- `.env` holds **[optional]** project credentials
+- `CORA_AGENT_INSTRUCTIONS.md` tells agents how to write safely
+
+## Agent write endpoint
+
+```http
+POST http://127.0.0.1:4242/api/widget
+Content-Type: application/json
+
+{ "id": "mrr", "value": 4800, "trend": "+14%" }
+```

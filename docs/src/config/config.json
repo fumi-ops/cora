@@ -1,0 +1,29 @@
+{
+  "site": {
+    "title": "Cora",
+    "logo": "/src/assets/cora-logo-light.svg",
+    "logo_darkmode": "/src/assets/cora-logo-dark.svg",
+    "logo_width": "140",
+    "logo_height": "40",
+    "logo_text": "Cora"
+  },
+
+  "settings": {
+    "search": false,
+    "theme_switcher": true
+  },
+
+  "params": {
+    "footer_contact": {
+      "enable": false,
+      "action": "#"
+    },
+    "copyright": "Cora is open source under the MIT License."
+  },
+
+  "navigation_button": {
+    "enable": true,
+    "label": "Quickstart",
+    "link": "/getting-started/introduction/quickstart/"
+  }
+}
