@@ -4,8 +4,11 @@
 [![npm version](https://img.shields.io/npm/v/@fumi-ops/cora.svg)](https://www.npmjs.com/package/@fumi-ops/cora)
 [![license](https://img.shields.io/npm/l/@fumi-ops/cora.svg)](https://github.com/fumi-ops/cora/blob/main/LICENSE)
 [![local-first](https://img.shields.io/badge/local--first-yes-0ea5e9)](https://github.com/fumi-ops/cora)
+[![demo](https://img.shields.io/badge/demo-live-brightgreen)](https://cora.fumi.dev/demo)
 
 AI Agent-Ready Local-First Dashboards.
+
+[![Demo preview](https://github.com/fumi-ops/cora/raw/main/docs/public/demo-preview.jpg)](https://cora.fumi.dev/demo)
 
 Cora is a file-driven dashboard runtime: `dashboard.json` is rendered live, while `cora.config.yaml` defines source bindings and refresh behavior.
 
