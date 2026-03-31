@@ -4,3 +4,13 @@ const { head } = Astro.locals.starlightRoute;
 ---
 
 {head.map(({ tag: Tag, attrs, content }) => <Tag {...attrs} set:html={content} />)}
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://cora.fumi.dev/og-preview.jpg">
+<meta property="og:image:alt" content="Cora - AI agent-ready local-first dashboards">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:image" content="https://cora.fumi.dev/og-preview.jpg">
+<meta property="twitter:image:alt" content="Cora - AI agent-ready local-first dashboards">
